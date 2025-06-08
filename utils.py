@@ -1,4 +1,5 @@
 import datetime
+import time
 
 
 class Time_Tool:
@@ -38,10 +39,31 @@ class Time_Tool:
         else:
             return False
 
+
 Timer = Time_Tool()
-Timer.start()
-# Timer.showing_time()
-for i in range(10000):
-    if i % 100 == 0:
-        Timer.mark_time()
-Timer.stop_time()
+while True:
+    print("1——开始计时")
+    print("2——打点计时")
+    print("3——停止计时")
+    tag = input("输入数字：")
+    if tag == '1' and not Timer.is_running:
+        Timer.start()
+        time.sleep(10)
+
+    if tag == '2' and Timer.is_running:
+        if Timer.point_time is None:
+            Timer.point_time = datetime.datetime.now()
+            Timer.elapsed_time = Timer.point_time - Timer.start_time
+        else:
+            prior = Timer.point_time
+            Timer.point_time = datetime.datetime.now()
+            Timer.elapsed_time = Timer.point_time - prior
+
+        print(Timer.elapsed_time)
+        time.sleep(10)
+
+    if tag == '3' and Timer.is_running:
+        Timer.end_time = datetime.datetime.now()
+        time0_all = Timer.end_time - Timer.start_time
+        print(time0_all)
+        break
